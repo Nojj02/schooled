@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: schooled-postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=Asdf1234
+    volumes:
+      - ./db/data:/docker-entrypoint-initdb.d
+
+#  schooled:
+#    depends_on:
+#      - postgres
+#    build:
+#      context: ./src/Cornucopia.FinancialPlanning
+#      dockerfile: Dockerfile
+#    ports:
+#      - "80"
