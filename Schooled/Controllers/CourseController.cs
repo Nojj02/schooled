@@ -20,12 +20,12 @@ namespace Schooled.Controllers
             return courseRepository.GetAll().Select(x => new CourseModel(x));
         }
 
-//        // GET api/values/5
-//        [HttpGet("{id}")]
-//        public string Get(int id)
-//        {
-//            return "value";
-//        }
+        [HttpGet("{id}")]
+        public string Get(string id)
+        {
+            var courseRepository = new CourseRepository();
+            return courseRepository.Get(id);
+        }
 
         // POST api/course
         [HttpPost]

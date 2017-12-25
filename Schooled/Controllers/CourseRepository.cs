@@ -68,5 +68,10 @@ namespace Schooled.Controllers
             }
             return entities;
         }
+
+        public string Get(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
