@@ -8,7 +8,7 @@ CREATE TABLE "schooled"."course"
 (
     "db_id" bigserial NOT NULL,
     "id" uuid NOT NULL,
-    "content" json NOT NULL,
+    "content" jsonb NOT NULL,
     "timestamp" timestamp with time zone NOT NULL
     -- "Version" bigint NOT NULL,
     -- "MessageType" character varying(100) COLLATE pg_catalog."default" NOT NULL,
