@@ -1,4 +1,4 @@
-using Schooled.Models;
+using Schooled.Model;
 using Xunit;
 
 namespace Schooled.Tests.Model

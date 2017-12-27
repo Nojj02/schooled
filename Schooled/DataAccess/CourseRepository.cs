@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Npgsql;
 using NpgsqlTypes;
-using Schooled.Models;
+using Schooled.Model;
 
 namespace Schooled.DataAccess
 {
