@@ -1,4 +1,4 @@
-namespace Schooled
+namespace Schooled.Models
 {
     public class Course
     {

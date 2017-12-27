@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Npgsql;
 using NpgsqlTypes;
+using Schooled.Models;
 
-namespace Schooled.Controllers
+namespace Schooled.DataAccess
 {
     public class CourseRepository
     {
