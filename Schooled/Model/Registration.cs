@@ -1,15 +1,17 @@
+using System;
+
 namespace Schooled.Model
 {
     public class Registration
     {
-        public Registration(string studentNumber, string term)
+        public Registration(string studentNumber, AcademicTerm academicTerm)
         {
             StudentNumber = studentNumber;
-            Term = term;
+            AcademicTerm = academicTerm;
         }
 
         public string StudentNumber { get; }
 
-        public string Term { get; }
+        public AcademicTerm AcademicTerm { get; }
     }
 }

@@ -7,11 +7,11 @@ namespace Schooled.Controllers
         public RegistrationReadModel(Registration registration)
         {
             StudentNumber = registration.StudentNumber;
-            Term = registration.Term;
+            AcademicTerm = new AcademicTermReadModel(registration.AcademicTerm);
         }
 
         public string StudentNumber { get; set; }
 
-        public string Term { get; set; }
+        public AcademicTermReadModel AcademicTerm { get; set; }
     }
 }

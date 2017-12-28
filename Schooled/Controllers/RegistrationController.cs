@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -29,21 +30,17 @@ namespace Schooled.Controllers
         [HttpPost]
         public async Task Post([FromBody]RegistrationPostModel model)
         {
-            var entity = new Registration(studentNumber: model.StudentNumber, term: model.Term);
+            var academicTerm =
+                new AcademicTerm(
+                    value: model.AcademicTerm.Value,
+                    academicYear: 
+                        new AcademicYear(
+                            startYear: new Year(model.AcademicTerm.StartYear),
+                            endYear: new Year(model.AcademicTerm.EndYear)
+                    ));
+            var entity = new Registration(studentNumber: model.StudentNumber, academicTerm: academicTerm);
             var RegistrationRepository = new RegistrationRepository();
             await RegistrationRepository.Save(entity);
         }
-//
-//        // PUT api/values/5
-//        [HttpPut("{id}")]
-//        public void Put(int id, [FromBody] string value)
-//        {
-//        }
-//
-//        // DELETE api/values/5
-//        [HttpDelete("{id}")]
-//        public void Delete(int id)
-//        {
-//        }
     }
 }

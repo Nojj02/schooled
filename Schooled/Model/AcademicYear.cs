@@ -2,21 +2,15 @@ namespace Schooled.Model
 {
     public class AcademicYear
     {
-        public AcademicYear(Month startMonth, Year startYear, Month endMonth, Year endYear)
+        public AcademicYear(Year startYear, Year endYear)
         {
             Contract.Requires(endYear >= startYear);
 
-            StartMonth = startMonth;
             StartYear = startYear;
-            EndMonth = endMonth;
             EndYear = endYear;
         }
 
-        public Month StartMonth { get; }
-
         public Year StartYear { get; }
-
-        public Month EndMonth { get; }
 
         public Year EndYear { get; }
 

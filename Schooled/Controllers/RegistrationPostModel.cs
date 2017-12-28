@@ -9,6 +9,6 @@ namespace Schooled.Controllers
     {
         public string StudentNumber { get; set; }
 
-        public string Term { get; set; }
+        public AcademicTermPostModel AcademicTerm { get; set; }
     }
 }

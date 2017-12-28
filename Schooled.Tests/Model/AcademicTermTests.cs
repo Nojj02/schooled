@@ -10,9 +10,7 @@ namespace Schooled.Tests.Model
         {
             var academicYear = 
                 new AcademicYear(
-                    startMonth: Month.June,
                     startYear: 2040,
-                    endMonth: Month.March,
                     endYear: 2041);
 
             var academicTerm =

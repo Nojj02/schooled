@@ -8,13 +8,23 @@ namespace Schooled.Tests.Model
         [Fact]
         public void New()
         {
+            var academicYear =
+                new AcademicYear(
+                    startYear: 2040,
+                    endYear: 2041);
+
+            var academicTerm =
+                new AcademicTerm(
+                    value: 1,
+                    academicYear: academicYear);
+
             var registration =
                 new Registration(
                     studentNumber: "016-00125",
-                    term: "1st semester 2040");
+                    academicTerm: academicTerm);
             
             Assert.Equal("016-00125", registration.StudentNumber);
-            Assert.Equal("1st semester 2040", registration.Term);
+            Assert.Equal("2040-1", registration.AcademicTerm.ToString());
         }
     }
 }

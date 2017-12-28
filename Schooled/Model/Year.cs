@@ -1,3 +1,5 @@
+using System;
+
 namespace Schooled.Model
 {
     public struct Year
@@ -6,7 +8,10 @@ namespace Schooled.Model
 
         public Year(int value)
         {
-            Contract.Requires(value >= 1 && value <= 9999);
+            if (value < 1 || value > 9999)
+            {
+                throw new InvalidYearException(value);
+            }
 
             _value = value;
         }
@@ -46,6 +51,15 @@ namespace Schooled.Model
         public override string ToString()
         {
             return $"{Value}";
+        }
+
+        public class InvalidYearException : Exception
+        {
+            public InvalidYearException(object obj)
+                : base($"{obj} is not a valid year")
+            {
+                
+            }
         }
     }
 }
