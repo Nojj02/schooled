@@ -38,7 +38,14 @@ namespace Schooled.Controllers
                             startYear: new Year(model.AcademicTerm.StartYear),
                             endYear: new Year(model.AcademicTerm.EndYear)
                     ));
-            var entity = new Registration(studentNumber: model.StudentNumber, academicTerm: academicTerm);
+
+            var entity = 
+                new Registration(
+                    studentNumber: model.StudentNumber, 
+                    academicTerm: academicTerm,
+                    courses: 
+                        model.Courses
+                            .Select(x => new Course(x.Code, x.Name, x.Units)));
             var RegistrationRepository = new RegistrationRepository();
             await RegistrationRepository.Save(entity);
         }
