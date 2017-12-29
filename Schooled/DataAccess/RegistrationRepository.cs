@@ -68,16 +68,17 @@ namespace Schooled.DataAccess
             return entities;
         }
 
-        public Registration Get(string id)
+        public Registration Get(Guid id)
         {
             var entities = new List<Registration>();
             using (var sqlConnection = new NpgsqlConnection(ConnectionString))
             {
                 sqlConnection.Open();
 
-                var command = "SELECT TOP 1 * FROM schooled.Registration";
+                var command = "SELECT TOP 1 * FROM schooled.Registration WHERE id = @id";
                 using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
                 {
+                    sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, id);
                     using (var reader = sqlCommand.ExecuteReader())
                     {
                         if (reader.Read())
@@ -90,6 +91,36 @@ namespace Schooled.DataAccess
             }
             
             return null;
+        }
+
+        public async Task Update(Registration entity)
+        {
+            using (var sqlConnection = new NpgsqlConnection(ConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var transaction = sqlConnection.BeginTransaction())
+                {
+                    try
+                    {
+                        var command = "UPDATE schooled.Registration SET content = @content WHERE id = @id";
+                        using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
+                        {
+                            sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, entity.Id);
+                            sqlCommand.Parameters.AddWithValue("content", NpgsqlDbType.Jsonb,
+                                JsonConvert.SerializeObject(entity));
+                            sqlCommand.ExecuteNonQuery();
+                        }
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        await transaction.RollbackAsync();
+                        throw;
+                    }
+                }
+            }
         }
     }
 }

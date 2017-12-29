@@ -21,7 +21,7 @@ namespace Schooled.Controllers
 
         // GET api/Registration/{id}
         [HttpGet("{id}")]
-        public RegistrationReadModel Get(string id)
+        public RegistrationReadModel Get(Guid id)
         {
             var registrationRepository = new RegistrationRepository();
             var entity = registrationRepository.Get(id);
@@ -48,8 +48,33 @@ namespace Schooled.Controllers
                     academicTerm: academicTerm,
                     courses: model.Courses
                         .Select(x => new Course(x.Code, x.Name, x.Units)));
+            
             var registrationRepository = new RegistrationRepository();
             await registrationRepository.Save(entity);
         }
+
+        // POST api/Registration
+        [HttpPut]
+        public async Task Put([FromBody]RegistrationUpdateModel model)
+        {
+            var entity = new RegistrationRepository().Get(model.Id);
+            entity.Update(courses: model.Courses
+                .Select(x => new Course(x.Code, x.Name, x.Units)));
+            
+            var registrationRepository = new RegistrationRepository();
+            await registrationRepository.Update(entity);
+        }
+    }
+
+    public class RegistrationUpdateModel
+    {
+        public RegistrationUpdateModel()
+        {
+            Courses = new List<CourseUpdateModel>();
+        }
+        
+        public Guid Id { get; set; }
+
+        public IEnumerable<CourseUpdateModel> Courses { get; set; }
     }
 }
