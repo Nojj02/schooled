@@ -39,5 +39,56 @@ namespace Schooled.Tests.Model
             Assert.Equal(1, registration.Courses.Count);
             Assert.Equal("Math11", registration.Courses[0].Code);
         }
+        
+        [Fact]
+        public void Update()
+        {
+            var academicYear =
+                new AcademicYear(
+                    startYear: 2040,
+                    endYear: 2041);
+
+            var academicTerm =
+                new AcademicTerm(
+                    value: 1,
+                    academicYear: academicYear);
+
+            var courses =
+                new List<Course>
+                {
+                    new Course(
+                        code: "Math11",
+                        name: "Basic Math",
+                        units: 3)
+                };
+
+            var registration =
+                new Registration(
+                    studentNumber: "016-00125",
+                    academicTerm: academicTerm,
+                    courses: courses);
+
+            var newCourses =
+                new List<Course>
+                {
+                    new Course(
+                        code: "MMS100",
+                        name: "Introduction to Multimedia",
+                        units: 3),
+                    new Course(
+                        code: "MMS112",
+                        name: "Multimedia and Law",
+                        units: 3)
+                };
+
+            registration.Update(
+                courses: newCourses);
+            
+            Assert.Equal("016-00125", registration.StudentNumber);
+            Assert.Equal("2040-1", registration.AcademicTerm.ToString());
+            Assert.Equal(2, registration.Courses.Count);
+            Assert.Equal("MMS100", registration.Courses[0].Code);
+            Assert.Equal("MMS112", registration.Courses[1].Code);
+        }
     }
 }

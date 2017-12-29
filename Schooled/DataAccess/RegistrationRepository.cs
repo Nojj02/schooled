@@ -23,8 +23,7 @@ namespace Schooled.DataAccess
                 {
                     try
                     {
-                        var command =
-                            "INSERT INTO schooled.Registration (id, content, timestamp) VALUES (@id, @content, @timestamp)";
+                        var command = "INSERT INTO schooled.Registration (id, content, timestamp) VALUES (@id, @content, @timestamp)";
                         using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
                         {
                             sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, Guid.NewGuid());
@@ -52,8 +51,7 @@ namespace Schooled.DataAccess
             {
                 sqlConnection.Open();
 
-                var command =
-                    "SELECT * FROM schooled.Registration";
+                var command = "SELECT * FROM schooled.Registration";
                 using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
                 {
                     using (var reader = sqlCommand.ExecuteReader())
@@ -66,12 +64,32 @@ namespace Schooled.DataAccess
                     }
                 }
             }
+            
             return entities;
         }
 
-        public string Get(string id)
+        public Registration Get(string id)
         {
-            throw new NotImplementedException();
+            var entities = new List<Registration>();
+            using (var sqlConnection = new NpgsqlConnection(ConnectionString))
+            {
+                sqlConnection.Open();
+
+                var command = "SELECT TOP 1 * FROM schooled.Registration";
+                using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
+                {
+                    using (var reader = sqlCommand.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            var entity = JsonConvert.DeserializeObject<Registration>(Convert.ToString(reader["content"]));
+                            return entity;
+                        }
+                    }
+                }
+            }
+            
+            return null;
         }
     }
 }

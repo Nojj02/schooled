@@ -19,5 +19,11 @@ namespace Schooled.Model
         public AcademicTerm AcademicTerm { get; }
 
         public IReadOnlyList<Course> Courses => _courses;
+
+        public void Update(IEnumerable<Course> courses)
+        {
+            _courses.Clear();
+            _courses.AddRange(courses);
+        }
     }
 }

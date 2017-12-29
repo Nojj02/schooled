@@ -15,15 +15,17 @@ namespace Schooled.Controllers
         [HttpGet]
         public IEnumerable<RegistrationReadModel> Get()
         {
-            var RegistrationRepository = new RegistrationRepository();
-            return RegistrationRepository.GetAll().Select(x => new RegistrationReadModel(x));
+            var registrationRepository = new RegistrationRepository();
+            return registrationRepository.GetAll().Select(x => new RegistrationReadModel(x));
         }
 
+        // GET api/Registration/{id}
         [HttpGet("{id}")]
-        public string Get(string id)
+        public RegistrationReadModel Get(string id)
         {
-            var RegistrationRepository = new RegistrationRepository();
-            return RegistrationRepository.Get(id);
+            var registrationRepository = new RegistrationRepository();
+            var entity = registrationRepository.Get(id);
+            return new RegistrationReadModel(entity);
         }
 
         // POST api/Registration
@@ -46,8 +48,8 @@ namespace Schooled.Controllers
                     courses: 
                         model.Courses
                             .Select(x => new Course(x.Code, x.Name, x.Units)));
-            var RegistrationRepository = new RegistrationRepository();
-            await RegistrationRepository.Save(entity);
+            var registrationRepository = new RegistrationRepository();
+            await registrationRepository.Save(entity);
         }
     }
 }
