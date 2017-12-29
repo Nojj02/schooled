@@ -75,7 +75,7 @@ namespace Schooled.DataAccess
             {
                 sqlConnection.Open();
 
-                var command = "SELECT TOP 1 * FROM schooled.Registration WHERE id = @id";
+                var command = "SELECT * FROM schooled.Registration WHERE id = @id LIMIT 1";
                 using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
                 {
                     sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, id);
