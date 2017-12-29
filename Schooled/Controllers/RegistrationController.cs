@@ -43,11 +43,11 @@ namespace Schooled.Controllers
 
             var entity = 
                 new Registration(
+                    id: Guid.NewGuid(), 
                     studentNumber: model.StudentNumber, 
                     academicTerm: academicTerm,
-                    courses: 
-                        model.Courses
-                            .Select(x => new Course(x.Code, x.Name, x.Units)));
+                    courses: model.Courses
+                        .Select(x => new Course(x.Code, x.Name, x.Units)));
             var registrationRepository = new RegistrationRepository();
             await registrationRepository.Save(entity);
         }

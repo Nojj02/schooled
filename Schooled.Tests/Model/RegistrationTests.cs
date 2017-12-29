@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Schooled.Model;
 using Xunit;
@@ -29,8 +30,7 @@ namespace Schooled.Tests.Model
                 };
 
             var registration =
-                new Registration(
-                    studentNumber: "016-00125",
+                new Registration(Guid.NewGuid(), studentNumber: "016-00125",
                     academicTerm: academicTerm,
                     courses: courses);
             
@@ -63,7 +63,7 @@ namespace Schooled.Tests.Model
                 };
 
             var registration =
-                new Registration(
+                new Registration(Guid.NewGuid(), 
                     studentNumber: "016-00125",
                     academicTerm: academicTerm,
                     courses: courses);

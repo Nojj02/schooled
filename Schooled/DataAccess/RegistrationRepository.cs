@@ -26,7 +26,7 @@ namespace Schooled.DataAccess
                         var command = "INSERT INTO schooled.Registration (id, content, timestamp) VALUES (@id, @content, @timestamp)";
                         using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
                         {
-                            sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, Guid.NewGuid());
+                            sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, entity.Id);
                             sqlCommand.Parameters.AddWithValue("content", NpgsqlDbType.Jsonb,
                                 JsonConvert.SerializeObject(entity));
                             sqlCommand.Parameters.AddWithValue("timestamp", NpgsqlDbType.TimestampTZ, DateTime.UtcNow);

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 namespace Schooled.Model
 {
-    public class Registration
+    public class Registration : Entity
     {
         private readonly List<Course> _courses = new List<Course>();
 
-        public Registration(string studentNumber, AcademicTerm academicTerm, IEnumerable<Course> courses)
+        public Registration(Guid id, string studentNumber, AcademicTerm academicTerm, IEnumerable<Course> courses)
+            : base(id)
         {
             StudentNumber = studentNumber;
             AcademicTerm = academicTerm;
