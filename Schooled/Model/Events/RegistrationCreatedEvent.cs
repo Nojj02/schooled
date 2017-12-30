@@ -5,12 +5,16 @@ namespace Schooled.Model.Events
 {
     public class RegistrationCreatedEvent : IRegistrationEvent
     {
-        public RegistrationCreatedEvent(Registration registration)
+        public RegistrationCreatedEvent(
+            Guid id,
+            string studentNumber,
+            AcademicTerm academicTerm,
+            IReadOnlyList<Course> courses)
         {
-            Id = registration.Id;
-            StudentNumber = registration.StudentNumber;
-            AcademicTerm = registration.AcademicTerm;
-            Courses = registration.Courses;
+            Id = id;
+            StudentNumber = studentNumber;
+            AcademicTerm = academicTerm;
+            Courses = courses;
         }
         
         public Guid Id { get; }

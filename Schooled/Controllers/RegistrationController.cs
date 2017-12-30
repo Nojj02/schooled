@@ -25,7 +25,7 @@ namespace Schooled.Controllers
         {
             var registrationRepository = new RegistrationRepository();
             var entity = registrationRepository.Get(id);
-            return new RegistrationReadModel(entity);
+            return entity != null ? new RegistrationReadModel(entity) : null;
         }
 
         // POST api/Registration
@@ -47,7 +47,8 @@ namespace Schooled.Controllers
                     studentNumber: model.StudentNumber, 
                     academicTerm: academicTerm,
                     courses: model.Courses
-                        .Select(x => new Course(x.Code, x.Name, x.Units)));
+                        .Select(x => new Course(x.Code, x.Name, x.Units))
+                        .ToList());
             
             var registrationRepository = new RegistrationRepository();
             await registrationRepository.Save(entity, DateTimeOffset.UtcNow);

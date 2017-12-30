@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Npgsql;
 using NpgsqlTypes;
 using Schooled.Model;
+using Schooled.Model.Events;
 
 namespace Schooled.DataAccess
 {
@@ -66,8 +68,7 @@ namespace Schooled.DataAccess
                     {
                         while (reader.Read())
                         {
-                            var entity = JsonConvert.DeserializeObject<Registration>(Convert.ToString(reader["content"]));
-                            entities.Add(entity);
+                            throw new NotImplementedException();
                         }
                     }
                 }
@@ -78,27 +79,32 @@ namespace Schooled.DataAccess
 
         public Registration Get(Guid id)
         {
-            var entities = new List<Registration>();
+            var registrationEvents = new List<IRegistrationEvent>();
             using (var sqlConnection = new NpgsqlConnection(ConnectionString))
             {
                 sqlConnection.Open();
 
-                var command = "SELECT * FROM schooled.Registration WHERE id = @id LIMIT 1";
+                var command = "SELECT * FROM schooled.Registration WHERE id = @id";
                 using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
                 {
                     sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, id);
                     using (var reader = sqlCommand.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
-                            var entity = JsonConvert.DeserializeObject<Registration>(Convert.ToString(reader["content"]));
-                            return entity;
+                            var eventType = Convert.ToString(reader["event_type"]);
+                            var theEvent = 
+                                (IRegistrationEvent)JsonConvert.DeserializeObject(
+                                    Convert.ToString(reader["event"]), 
+                                    RegistrationEvents.EventTypeLookup.Single(x=> x.Value == eventType).Key);
+                            
+                            registrationEvents.Add(theEvent);
                         }
                     }
                 }
             }
             
-            return null;
+            return registrationEvents.Any() ? new Registration(id, registrationEvents) : null;
         }
 
         public async Task Update(Registration entity)
