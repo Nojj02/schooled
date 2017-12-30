@@ -1,6 +1,6 @@
 using System;
 
-namespace Schooled.Model
+namespace Schooled.Model.Events
 {
     public interface IRegistrationEvent
     {

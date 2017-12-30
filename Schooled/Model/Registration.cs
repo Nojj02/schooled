@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Schooled.Model.Events;
 
 namespace Schooled.Model
 {

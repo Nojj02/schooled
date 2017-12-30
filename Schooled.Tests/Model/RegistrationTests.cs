@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Schooled.Model;
+using Schooled.Model.Events;
 using Xunit;
 
 namespace Schooled.Tests.Model

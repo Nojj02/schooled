@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Schooled.Model
+namespace Schooled.Model.Events
 {
     public class RegistrationCourseSelectionChangedEvent : IRegistrationEvent
     {

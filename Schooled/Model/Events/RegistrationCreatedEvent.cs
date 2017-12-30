@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Schooled.Model
+namespace Schooled.Model.Events
 {
     public class RegistrationCreatedEvent : IRegistrationEvent
     {
