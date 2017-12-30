@@ -65,7 +65,7 @@ namespace Schooled.Controllers
                     .ToList());
             
             var registrationRepository = new RegistrationRepository();
-            await registrationRepository.Update(entity);
+            await registrationRepository.Update(entity, DateTimeOffset.UtcNow);
         }
     }
 }
