@@ -67,16 +67,4 @@ namespace Schooled.Controllers
             await registrationRepository.Update(entity);
         }
     }
-
-    public class RegistrationUpdateModel
-    {
-        public RegistrationUpdateModel()
-        {
-            Courses = new List<CourseUpdateModel>();
-        }
-        
-        public Guid Id { get; set; }
-
-        public IEnumerable<CourseUpdateModel> Courses { get; set; }
-    }
 }
