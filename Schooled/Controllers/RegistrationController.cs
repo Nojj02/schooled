@@ -58,7 +58,7 @@ namespace Schooled.Controllers
         public async Task Put([FromBody]RegistrationUpdateModel model)
         {
             var entity = new RegistrationRepository().Get(model.Id);
-            entity.Update(courses: model.Courses
+            entity.ChangeCourseSelection(courses: model.Courses
                 .Select(x => new Course(x.Code, x.Name, x.Units)));
             
             var registrationRepository = new RegistrationRepository();

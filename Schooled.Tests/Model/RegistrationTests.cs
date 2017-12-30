@@ -41,7 +41,7 @@ namespace Schooled.Tests.Model
         }
         
         [Fact]
-        public void Update()
+        public void ChangeCourseSelection()
         {
             var academicYear =
                 new AcademicYear(
@@ -81,7 +81,7 @@ namespace Schooled.Tests.Model
                         units: 3)
                 };
 
-            registration.Update(
+            registration.ChangeCourseSelection(
                 courses: newCourses);
             
             Assert.Equal("016-00125", registration.StudentNumber);
