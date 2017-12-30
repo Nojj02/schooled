@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Schooled.Model
 {
@@ -26,10 +27,12 @@ namespace Schooled.Model
 
         public IReadOnlyList<IRegistrationEvent> Events => _events;
 
-        public void ChangeCourseSelection(IEnumerable<Course> courses)
+        public void ChangeCourseSelection(IReadOnlyList<Course> courses)
         {
             _courses.Clear();
             _courses.AddRange(courses);
+            
+            _events.Add(new RegistrationCourseSelectionChangedEvent(Id, courses));
         }
     }
 
@@ -48,6 +51,19 @@ namespace Schooled.Model
         public string StudentNumber { get; }
 
         public AcademicTerm AcademicTerm { get; }
+
+        public IReadOnlyList<Course> Courses { get; }
+    }
+
+    public class RegistrationCourseSelectionChangedEvent : IRegistrationEvent
+    {
+        public RegistrationCourseSelectionChangedEvent(Guid id, IEnumerable<Course> courses)
+        {
+            Id = id;
+            Courses = courses.ToList();
+        }
+        
+        public Guid Id { get; }
 
         public IReadOnlyList<Course> Courses { get; }
     }

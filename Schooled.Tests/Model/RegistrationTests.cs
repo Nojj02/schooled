@@ -74,8 +74,9 @@ namespace Schooled.Tests.Model
                         units: 3)
                 };
 
+            var id = Guid.NewGuid();
             var registration =
-                new Registration(Guid.NewGuid(), 
+                new Registration(id, 
                     studentNumber: "016-00125",
                     academicTerm: academicTerm,
                     courses: courses);
@@ -101,6 +102,14 @@ namespace Schooled.Tests.Model
             Assert.Equal(2, registration.Courses.Count);
             Assert.Equal("MMS100", registration.Courses[0].Code);
             Assert.Equal("MMS112", registration.Courses[1].Code);
+            
+            Assert.Equal(2, registration.Events.Count);
+            var courseSelectionChangedEvent = (RegistrationCourseSelectionChangedEvent)registration.Events[1];
+            
+            Assert.Equal(id, courseSelectionChangedEvent.Id);
+            Assert.Equal(2, courseSelectionChangedEvent.Courses.Count);
+            Assert.Equal("MMS100", courseSelectionChangedEvent.Courses[0].Code);
+            Assert.Equal("MMS112", courseSelectionChangedEvent.Courses[1].Code);
         }
     }
 }
