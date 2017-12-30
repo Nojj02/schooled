@@ -13,7 +13,7 @@ namespace Schooled.DataAccess
         private const string ConnectionString =
             "Host=localhost;Username=postgres;Password=thepassword;Database=postgres;Search Path=schooled";
 
-        public async Task Save(Registration entity)
+        public async Task Save(Registration entity, DateTimeOffset timeStamp)
         {
             using (var sqlConnection = new NpgsqlConnection(ConnectionString))
             {
@@ -23,15 +23,23 @@ namespace Schooled.DataAccess
                 {
                     try
                     {
-                        var command = "INSERT INTO schooled.Registration (id, content, timestamp) VALUES (@id, @content, @timestamp)";
-                        using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
+                        foreach (var entityEvent in entity.Events)
                         {
-                            sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, entity.Id);
-                            sqlCommand.Parameters.AddWithValue("content", NpgsqlDbType.Jsonb,
-                                JsonConvert.SerializeObject(entity));
-                            sqlCommand.Parameters.AddWithValue("timestamp", NpgsqlDbType.TimestampTZ, DateTime.UtcNow);
-                            sqlCommand.ExecuteNonQuery();
+                            var command = "INSERT INTO schooled.Registration (id, event_type, event, timestamp) VALUES (@id, @event_type, @event, @timestamp)";
+                            using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
+                            {
+                                sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, 
+                                    entity.Id);
+                                sqlCommand.Parameters.AddWithValue("event_type", NpgsqlDbType.Varchar,
+                                    entityEvent.GetType());
+                                sqlCommand.Parameters.AddWithValue("event", NpgsqlDbType.Jsonb,
+                                    JsonConvert.SerializeObject(entityEvent));
+                                sqlCommand.Parameters.AddWithValue("timestamp", NpgsqlDbType.TimestampTZ, 
+                                    timeStamp);
+                                sqlCommand.ExecuteNonQuery();
+                            }
                         }
+                        
                         await transaction.CommitAsync();
                     }
                     catch (Exception e)

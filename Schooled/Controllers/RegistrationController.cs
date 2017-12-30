@@ -50,7 +50,7 @@ namespace Schooled.Controllers
                         .Select(x => new Course(x.Code, x.Name, x.Units)));
             
             var registrationRepository = new RegistrationRepository();
-            await registrationRepository.Save(entity);
+            await registrationRepository.Save(entity, DateTimeOffset.UtcNow);
         }
 
         // POST api/Registration

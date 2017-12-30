@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Schooled\Schooled.csproj" />
     <ProjectReference Include="..\Schooled\Schooled.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataAccess" />
+    <Folder Include="EventSerializerTests" />
+  </ItemGroup>
 </Project>

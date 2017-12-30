@@ -9,7 +9,8 @@ CREATE TABLE "schooled"."registration"
 (
     "db_id" bigserial NOT NULL,
     "id" uuid NOT NULL,
-    "content" jsonb NOT NULL,
+    "event_type" CHARACTER VARYING(100) NOT NULL,
+    "event" jsonb NOT NULL,
     "timestamp" timestamp with time zone NOT NULL
     -- "Version" bigint NOT NULL,
     -- "MessageType" character varying(100) COLLATE pg_catalog."default" NOT NULL,
