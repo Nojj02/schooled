@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Schooled.Model.Events;
 
 namespace Schooled.Model
@@ -16,7 +17,7 @@ namespace Schooled.Model
         {
             var thisEvent = 
                 new RegistrationCreatedEvent(
-                    id: id,
+                    id: id, version: 0,
                     studentNumber: studentNumber,
                     academicTerm: academicTerm,
                     courses: courses);
@@ -59,8 +60,22 @@ namespace Schooled.Model
 
         public void ChangeCourseSelection(IReadOnlyList<Course> courses)
         {
-            var registrationCourseSelectionChangedEvent = new RegistrationCourseSelectionChangedEvent(Id, courses);
+            var registrationCourseSelectionChangedEvent = 
+                new RegistrationCourseSelectionChangedEvent(
+                    id: Id, 
+                    version: GetLastVersionNumber() + 1,
+                    courses: courses);
             Apply(registrationCourseSelectionChangedEvent, isNew: true);
+        }
+
+        private int GetLastVersionNumber()
+        {
+            return _events.Any()
+                ? _events
+                    .OrderByDescending(x => x.Version)
+                    .First()
+                    .Version
+                : -1;
         }
 
         private void Apply(RegistrationCreatedEvent e, bool isNew)

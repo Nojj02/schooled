@@ -27,11 +27,13 @@ namespace Schooled.DataAccess
                     {
                         foreach (var entityEvent in entity.Events)
                         {
-                            var command = "INSERT INTO schooled.Registration (id, event_type, event, timestamp) VALUES (@id, @event_type, @event, @timestamp)";
+                            var command = "INSERT INTO schooled.Registration (id, version, event_type, event, timestamp) VALUES (@id, @version, @event_type, @event, @timestamp)";
                             using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
                             {
                                 sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, 
                                     entity.Id);
+                                sqlCommand.Parameters.AddWithValue("version", NpgsqlDbType.Integer,
+                                    entityEvent.Version);
                                 sqlCommand.Parameters.AddWithValue("event_type", NpgsqlDbType.Varchar,
                                     entityEvent.GetType());
                                 sqlCommand.Parameters.AddWithValue("event", NpgsqlDbType.Jsonb,
@@ -119,11 +121,13 @@ namespace Schooled.DataAccess
                     {
                         foreach (var entityEvent in entity.NewEvents)
                         {
-                            var command = "INSERT INTO schooled.Registration (id, event_type, event, timestamp) VALUES (@id, @event_type, @event, @timestamp)";
+                            var command = "INSERT INTO schooled.Registration (id, version, event_type, event, timestamp) VALUES (@id, @version, @event_type, @event, @timestamp)";
                             using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
                             {
                                 sqlCommand.Parameters.AddWithValue("id", NpgsqlDbType.Uuid, 
                                     entity.Id);
+                                sqlCommand.Parameters.AddWithValue("version", NpgsqlDbType.Integer,
+                                    entityEvent.Version);
                                 sqlCommand.Parameters.AddWithValue("event_type", NpgsqlDbType.Varchar,
                                     entityEvent.GetType());
                                 sqlCommand.Parameters.AddWithValue("event", NpgsqlDbType.Jsonb,

@@ -50,7 +50,7 @@ namespace Schooled.Tests.Model
             Assert.Equal("2040-1", createdEvent.AcademicTerm.ToString());
             Assert.Equal(1, createdEvent.Courses.Count);
             Assert.Equal("Math11", createdEvent.Courses[0].Code);
-            
+            Assert.Equal(0, createdEvent.Version);
         }
         
         [Fact]
@@ -111,6 +111,7 @@ namespace Schooled.Tests.Model
             Assert.Equal(2, courseSelectionChangedEvent.Courses.Count);
             Assert.Equal("MMS100", courseSelectionChangedEvent.Courses[0].Code);
             Assert.Equal("MMS112", courseSelectionChangedEvent.Courses[1].Code);
+            Assert.Equal(1, courseSelectionChangedEvent.Version);
         }
     }
 }
