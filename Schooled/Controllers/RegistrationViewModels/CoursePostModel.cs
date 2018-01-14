@@ -1,4 +1,4 @@
-﻿namespace Schooled.Controllers
+﻿namespace Schooled.Controllers.RegistrationViewModels
 {
     public class CoursePostModel
     {

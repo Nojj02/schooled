@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Schooled.Controllers
+namespace Schooled.Controllers.RegistrationViewModels
 {
     public class RegistrationUpdateModel
     {

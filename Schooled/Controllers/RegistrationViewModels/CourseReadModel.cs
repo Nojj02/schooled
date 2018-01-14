@@ -1,6 +1,6 @@
 ﻿using Schooled.Model;
 
-namespace Schooled.Controllers
+namespace Schooled.Controllers.RegistrationViewModels
 {
     public class CourseReadModel
     {
