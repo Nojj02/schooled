@@ -56,29 +56,6 @@ namespace Schooled.DataAccess
             }
         }
 
-        public IEnumerable<Registration> GetAll()
-        {
-            var entities = new List<Registration>();
-            using (var sqlConnection = new NpgsqlConnection(ConnectionString))
-            {
-                sqlConnection.Open();
-
-                var command = "SELECT * FROM schooled.Registration";
-                using (var sqlCommand = new Npgsql.NpgsqlCommand(command, sqlConnection))
-                {
-                    using (var reader = sqlCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            throw new NotImplementedException();
-                        }
-                    }
-                }
-            }
-            
-            return entities;
-        }
-
         public Registration Get(Guid id)
         {
             var registrationEvents = new List<IRegistrationEvent>();

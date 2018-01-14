@@ -16,8 +16,7 @@ namespace Schooled.Controllers
         [HttpGet]
         public IEnumerable<RegistrationReadModel> Get()
         {
-            var registrationRepository = new RegistrationRepository();
-            return registrationRepository.GetAll().Select(x => new RegistrationReadModel(x));
+            throw new NotImplementedException();
         }
 
         // GET api/Registration/{id}
